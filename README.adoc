@@ -1,6 +1,7 @@
 = The dataspitter
 Author Name <thierry.vanmarcke@agristo.com>
 :toc: left
+// :sectnums:
 
 This document contains info on the dataspitter, how it works and what the structure of the data going to the mqtt broker is.
 
@@ -9,3 +10,4 @@ include::docs/introduction.adoc[]
 include::docs/naming-conventions.adoc[]
 
 include::docs/structured-data-types.adoc[]
+

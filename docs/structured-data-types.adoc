@@ -44,7 +44,7 @@ The detail of every data type can be found in the paragraphs below.
 === About the parameters folder in the data types
 In each data type you'll probably see a folder `parameters`. These are parameters that we assign in the data spitter and contain fixed data. So these are not 'connected' to a dynamic tag and can only change when we change them in the editor of the data spitter.
 
-What was the idea behind these?
+Mostly you'll see the 'big' parameter set, sometimes it will be another smaller set.
 
 .The 'big' parameter set
 ....
@@ -62,6 +62,22 @@ What was the idea behind these?
     └── site
 ....
 
+==== What was the idea behind these?
+Since we have 'description', 'equipment description', 'location description' and 'process description' available for newer object (like motors, valves, ...) in the 'tag coding tool' it seemed nice to copy these over.
+
+The 'site' was an extra field so the reader of the data knows the site where the data is coming from.
+
+.The site
+....
+hb - Harelbeke, Belgium
+wb - Wielsbeke, Belgium
+nz - Nazareth, Belgium
+tb - Tilburg, The Netherlands
+....
+
+==== Caveats
+Sometimes the parameters will be filled in, sometimes not.
+Deal with it.
 
 === calculations
 This is the data type for a calculation.

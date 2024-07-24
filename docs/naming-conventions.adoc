@@ -1,0 +1,12 @@
+== Naming conventions
+
+=== General rules
+
+NOTE:: To enhance clarity and maintainability, we use self-descriptive tag names. These tags are designed to be intuitive, making it easy to understand their purpose at a glance.
+
+* Names of folders or types are always in English.
+* All should have meaningful names that are self-explanatory.
+* All should be in lower case, without special characters, underscores are allowed since they are used in the tag names.
+* Instances of data are always (for the moment) set as read only in the data spitter.
+* We will add the unit to an atomic tag as much as possible, so we will not create a seperate tag thas has the unit of another tag in it.
+

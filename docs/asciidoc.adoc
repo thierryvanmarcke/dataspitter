@@ -1,0 +1,40 @@
+[#title]
+== AsciiDoc
+
+=== What is AsciiDoc?
+See https://asciidoctor.org/docs/what-is-asciidoc/
+
+
+=== Folder structure
+This is the folder structure that we suggest for documents in a repository that consist of multiple pages and topics.
+
+.Folder structure of the dataspitter repository
+....
+dataspitter/
+├── README.adoc
+├── docs/
+│   ├── introduction.adoc
+│   ├── asciidoc-rules.adoc
+│   ├── other-doc.adoc
+└── images/
+    ├── introduction/
+    │   ├── image1.png
+    ├── asciidoc-rules/
+    │   ├── image2.png
+    └── other-doc/
+        └── image3.png
+....
+
+* In the root there is only one README file.
+** This uses 'include' statements to the other files.
+* AsciiDoc files have the `+.adoc+` extension.
+* Folder and files names are always in lower case, `+README.adoc+` is the only exception.
+* Use dashes to separate words.
+* There is an `+images+` folder with subfolder for each document.
+
+=== What do I need for writing AsciiDoc files?
+We suggest the JetBrains IDE called IntelliJ IDEA.
+You can download the community edition for free. +
+Don't forget to install the AsciiDoc plugin, see https://plugins.jetbrains.com/plugin/7391-asciidoc
+
+IntelliJ will let you preview your AsciiDoc files, can connect to GitHub and has a more visual interface if you should forget what AscciDoc statement to use for a certain feature.

@@ -1,0 +1,310 @@
+== Structured data types
+
+IMPORTANT:: When we talk about structured data type we are referring to the data types that we use for sending the data to the broker. We are not talking about other Ignition data types.
+
+=== Why do we need this?
+
+Standardizing data from motors, valves, measurements and so on, is crucial because it ensures everyone can easily understand and interpret the information. +
+It enables efficient scripting and automation, allows seamless communication between different systems, reduces complexity, and simplifies scaling operations.
+
+Without standardization, managing data would be chaotic and error-prone.
+
+=== What types do we have?
+
+The detail of every data type can be found in the paragraphs below.
+
+.Available structured data types
+....
+├── calculations
+│   └── single calculation
+├── integrated systems
+│   └── nexgem
+│       └── nexgem
+├── parameters
+│   └── single selection
+├── simple devices
+│   ├── measurement
+│   │   ├── basic
+│   │   ├── electricity
+│   │   └── flow
+│   ├── motors
+│   │   ├── motor dol
+│   │   └── motor freq
+│   ├── sensors
+│   │   └── on off sensor
+│   └── valves
+│       ├── analog valve
+│       ├── manual valve
+│       └── on off valve
+└── weighing
+    ├── batch weighted dumper
+    └── weigh belt
+....
+
+=== About the parameters folder in the data types
+In each data type you'll probably see a folder `parameters`. These are parameters that we assign in the data spitter and contain fixed data. So these are not 'connected' to a dynamic tag and can only change when we change them in the editor of the data spitter.
+
+What was the idea behind these?
+
+.The 'big' parameter set
+....
+└── parameters
+    ├── description
+    ├── equipment description
+    ├── location description
+    ├── process description
+    └── site
+....
+
+.A small parameter set
+....
+└── parameters
+    └── site
+....
+
+
+=== calculations
+This is the data type for a calculation.
+A calculation could e.g. be a content of an oil tank in kg.
+We use a separate data type for this, so you know that the value is calculated and is not directly a value from e.g. a sensor.
+
+==== single calculation
+....
+├── parameters
+│   └── site
+└── value
+....
+
+=== integrated systems
+Here you find the more complex devices. Like a piece of machinery that consist of several motors and sensors, has settings,and so on.
+
+==== nexgem
+The data type for the Nexgem forming machines.
+
+===== nexgem
+....
+├── parameters
+│   └── path to Nexgem instance
+├── actual values
+│       ├── level
+│       │   └── level hopper
+│       ├── pressure
+│       │   ├── pressure side 1
+│       │   └── pressure side 2
+│       ├── speed
+│       │   ├── belt speed
+│       │   ├── drum speed
+│       │   ├── head speed
+│       │   ├── hopper speed
+│       │   ├── patties per minute
+│       │   └── screw speed
+│       ├── thickness
+│       │   ├── thickness left side
+│       │   └── thickness right side
+│       └── water
+│           ├── waterflow to belt
+│           ├── waterflow to head
+│           └── waterflow to spray
+├── recipes
+│   └── current recipe name
+├── settings
+│       ├── patties
+│       │   ├── patties per row
+│       │   └── weight of one pattie
+│       ├── pressure
+│       │   └── required pressure
+│       ├── speed
+│       │   ├── required drum speed
+│       │   └── required screw speed
+│       ├── thickness
+│       │   └── required thickness
+│       └── water
+│           ├── required water to belt
+│           ├── required water to head
+│           └── required water to spray
+├── description
+└── tag code
+....
+
+
+=== parameters
+This is the data type for a parameter. A parameter is mostly a setting that the user can set in the SCADA system. We have made a separate daat type for this so the end user knows that the data has something to do with a parameter.
+
+NOTE:: This has nothing to do with the parameters described in <<About the parameters folder in the data types>>
+
+==== single selection
+....
+├── parameters
+│   └── site
+└── value
+....
+
+=== simple devices
+Here you'll find all 'core' devices.
+
+==== measurement
+All the types of measurements
+
+===== basic
+A basic measurement only has a tag with the `+actual value+`.
+....
+├── parameters
+│   ├── description
+│   ├── equipment description
+│   ├── location description
+│   ├── process description
+│   └── site
+└── actual value
+....
+
+===== electricity
+This is the data type for an electricity meter. We only place the most needed data for the users in here.
+....
+├── parameters
+│   └── site
+├── total active power
+├── total apparent power
+├── total power factor
+├── total reactive power
+├── totalizer active energy
+└── type
+....
+
+===== flow
+The data for a flow meter. This has the `+actual value+` and a `+totalizer+`. If we have a flow meter without a totalizer we would normally use the `+basic+` measurement for that.
+
+Both tags will NORMALLY have a property with the unit. +
+For the `+actual value+` this could be e.g. 'm³/h', 'l/m',  but it could also be 'm3/u'. +
+For the `+totalizer+` this could be e.g. 'm³', 'l', but it could also be 'm3' or 'litres'. +
+The fact is that these units are not really standardized.
+....
+├── parameters
+│   ├── description
+│   ├── equipment description
+│   ├── location description
+│   ├── process description
+│   └── site
+│── actual value
+└── totalizer
+....
+
+==== motors
+
+===== motor dol
+A motor that is controlled `dol`. DOL stands for **D**irect **O**n **L**ine and means that the motor is connected directly to the powergrid when being started. So it is either on or off, the speed cannot be controlled. +
+But it can forward and SOMETIMES reverse. The forward direction is NORMALLY the direction that the motor should run in the normal condition. The reverse direction is the opposite. +
+It is possible that the motor can only run in one direction, but you'll still see the tag `is running reverse`, it will however never come on. Or you will see a '?' when you try to readout the tag.
+
+....
+├── parameters
+│   ├── description
+│   ├── equipment description
+│   ├── location description
+│   ├── process description
+│   └── site
+├── is running forward
+└── is running reverse
+....
+
+===== motor freqs
+A motor controlled by a frequency drive. So we can control the speed of the motor. +
+If certain data is not available you'll probably see a '?' when trying to read that data.
+
+....
+├── parameters
+│   ├── description
+│   ├── equipment description
+│   ├── location description
+│   ├── process description
+│   └── site
+├── actual current
+├── actual speed
+├── is running forward
+└── is running reverse
+....
+
+==== sensors
+All kinds of sensors. A sensor NORMALLY has a discrete output whereas the measurement has an analog output.
+
+===== on off sensor
+A basic on/off sensor. The tag `detected` comes on when the sensor is on.
+....
+├── parameters
+│   ├── description
+│   ├── equipment description
+│   ├── location description
+│   ├── process description
+│   └── site
+└── detected
+....
+
+==== valves
+All kind of valves.
+
+===== analog valve
+This is a valve that can position at a certain point of its stroke.
+
+....
+├── parameters
+│   ├── description
+│   ├── equipment description
+│   ├── location description
+│   ├── process description
+│   └── site
+└── actual position
+....
+
+===== manual valve
+This is a manual valve that only can be open or closed. So it is not controlled by a system, it has to be moved manually. It is POSSIBLE that the valve is in an in between state an is neither open nor close. You'll see that because none of the `is closed` or `is opened` tag is high.
+....
+├── parameters
+│   ├── description
+│   ├── equipment description
+│   ├── location description
+│   ├── process description
+│   └── site
+├── is closed
+└── is opened
+....
+
+===== on off valve
+This is a automated valve that only can be open or closed. It is POSSIBLE that the valve is in an in between state an is neither open nor close. You'll see that because none of the `is closed` or `is opened` tag is high.
+....
+├── parameters
+│   ├── description
+│   ├── equipment description
+│   ├── location description
+│   ├── process description
+│   └── site
+├── is closed
+└── is opened
+....
+
+==== weighing
+All data type for weight related stuff.
+
+===== batch weighted dumper
+A batch weighted dumper is a data type for a weighing system that dumps it contents from time to time. We use this for e.g. the weigh hopper of the steam vessel.
+....
+├── parameters
+│   ├── description
+│   ├── equipment description
+│   ├── location description
+│   ├── process description
+│   └── site
+├── actual weight
+└── totalizer
+....
+
+===== weigh belt
+This data type speaks for itself. It has a `actual throughput` in e.g. 't/h', 'kg/h', ... and a `is running` tag.
+....
+├── parameters
+│   ├── description
+│   ├── equipment description
+│   ├── location description
+│   ├── process description
+│   └── site
+├── actual troughput
+└── is running
+....

@@ -1,0 +1,7 @@
+== Introduction
+
+When we talk about the 'dataspitter' we are actually talking about an Ignition server that is connected to all kind of other data points, and transforms that data into a structured set that is pushed to an MQTT broker.
+
+The idea is that the most important automation data is always available in the broker in a structured format. So other systems can connect to the broker to subscribe to a dataset, and then log, analyze, or do whatever, with the data.
+
+The whole documentation is made in the AsciiDoc format. You can find a some info in our document <<docs/asciidoc.adoc#title,AsciiDoc>>
